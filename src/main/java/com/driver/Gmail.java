@@ -96,9 +96,9 @@ public class Gmail extends Email {
     public String findOldestMessage(){
         // If the inbox is empty, return null
         // Else, return the message of the oldest mail present in the inbox
-        if(allMails.size()>0)
+        if(allMails.isEmpty()) return null;
         return allMails.get(0).message;
-        return null;
+
     }
 
     public int findMailsBetweenDates(Date start, Date end){
