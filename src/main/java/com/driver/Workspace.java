@@ -19,24 +19,7 @@ public class Workspace extends Gmail{
 
     boolean isFirstMeeting = true;
     public void addMeeting(Meeting meeting){
-        boolean isPossible = true;
-        if(isFirstMeeting){
-            calendar.add(meeting);
-            isFirstMeeting = false;
-        }
-        else {
-            for (int i = 0; i < calendar.size(); i++) {
-                LocalTime oldStart = calendar.get(i).getStartTime();
-                LocalTime oldEnd = calendar.get(i).getEndTime();
-
-                if((meeting.getStartTime().isAfter(oldStart) && meeting.getEndTime().isBefore(oldStart))
-                    && meeting.getEndTime().isBefore(oldEnd) && meeting.getStartTime().isAfter(oldStart)) isPossible = false;
-            }
-
-            if(isPossible) calendar.add(meeting);
-        }
-
-
+        calendar.add(meeting);
     }
 
     public int findMaxMeetings(){
@@ -44,6 +27,19 @@ public class Workspace extends Gmail{
         // 1. At a particular time, you can be present in at most one meeting
         // 2. If you want to attend a meeting, you must join it at its start time and leave at end time.
         // Example: If a meeting ends at 10:00 am, you cannot attend another meeting starting at 10:00 am
-        return calendar.size();
+        ArrayList<Pair<LocalTime, Integer>> endTimes = new ArrayList<>();
+        for(int i=00; i<calendar.size(); i++){
+            endTimes.add(Pair.of(calendar.get(i).getEndTime(), i));
+        }
+        Collections.sort(endTimes);
+        LocalTime timeLimit  = endTimes.get(0).getLeft();
+        int count = 1;
+        for (int i=0; i<endTimes.size(); i++){
+            if(calendar.get(endTimes.get(i).getRight()).getStartTime().compareTo(timeLimit)>0){
+                count+=1;
+                timeLimit = endTimes.get(i).getLeft();
+            }
+        }
+        return count;
     }
 }
