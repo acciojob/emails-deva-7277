@@ -23,13 +23,13 @@ public class Email {
     public void changePassword(String oldPassword, String newPassword) {
         if (password.equals(oldPassword)) {
             if (passWordValidation(newPassword)) {
-                System.out.println("Password changed successfully");
+//                System.out.println("Password changed successfully");
                 this.password = newPassword;
             } else {
-                System.out.println("The new password is not valid !!!");
+//                System.out.println("The new password is not valid !!!");
             }
         } else {
-            System.out.println("Your Current Password is not in our database");
+//            System.out.println("Your Current Password is not in our database");
         }
     }
 
